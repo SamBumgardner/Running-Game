@@ -10,7 +10,7 @@ To build and run Running-Game on your own computer, follow the steps below:
 2. Clone or download this repository to your computer.	
 3. Run the command `haxelib run lime test neko` to build and run the game.
     * Executables can be found nested within the resulting `\export` directory. For example, a neko executable built on a windows machine (as done in step 3) will end up in `\Running-Game\export\windows\neko\bin`.
-    * To build a version of the game with debug mode enabled, add the debug flag (`-debug`) running the command in step 3. The debug console can be accessed while the game is running with the `\`` key.
+    * To build a version of the game with debug mode enabled, add the debug flag (`-debug`) running the command in step 3. The debug console can be accessed while the game is running with the backquote/tilde key.
 
 ## Contribution Guidelines
 This project is probably too young for unplanned external contributions. Please contact us directly if you'd like to help work on the game!
