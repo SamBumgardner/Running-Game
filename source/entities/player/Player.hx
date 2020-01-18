@@ -1,23 +1,47 @@
 package entities.player;
 
-import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
+/**
+    Main player-controlled entity. 
+    Reacts to player inputs and handles a lot of fundamental interactions in the game.
+**/
 class Player extends FlxSprite 
 {
     private static var WIDTH(default, never):Int = 32;
     private static var HEIGHT(default, never):Int = 64;
 
-    private static var MOVE_SPEED(default, never):Int = 100;
+    private static var MOVE_SPEED(default, never):Float = 250;
+    private static var JUMP_SPEED(default, never):Float = -300;
+    private static var GRAVITY(default, never):Float = 250;
+    private static var MAX_SPEED_X(default, never):Float = 200;
+    private static var MAX_SPEED_Y(default, never):Float = 480;
 
+    ////////////////////
+    // INITIALIZATION //
+    ////////////////////
     public function new() {
         super();
         makeGraphic(WIDTH, HEIGHT);
+        configureSpeed();
     }
 
+    /**
+        Sets up player variables related to movement and speed.
+    **/
+    private function configureSpeed() {
+        acceleration.set(0, GRAVITY);
+        maxVelocity.set(MAX_SPEED_X, MAX_SPEED_Y);
+    }
+
+    ////////////
+    // Update //
+    ////////////
     override public function update(elapsed:Float) {
         setMoveSpeed();
+        jump();
+        // super.update() updates position, draws sprite, etc. so we typcially want to do it last.
         super.update(elapsed);
     }
 
@@ -35,15 +59,15 @@ class Player extends FlxSprite
             horizontalMovement++;
         }
 
-        var verticalMovement:Int = 0;
-        if (FlxG.keys.pressed.W || FlxG.keys.pressed.UP) {
-            verticalMovement--;
-        }
+        velocity.x = horizontalMovement * MOVE_SPEED;
+    }
 
-        if (FlxG.keys.pressed.S || FlxG.keys.pressed.DOWN) {
-            verticalMovement++;
+    /**
+        Checks if player should jump, then jumps if needed.
+    **/
+    private function jump() {
+        if (FlxG.keys.justPressed.SPACE) {
+            velocity.y = JUMP_SPEED;
         }
-
-        velocity.set(MOVE_SPEED * horizontalMovement, MOVE_SPEED * verticalMovement);
     }
 }
