@@ -1,5 +1,6 @@
 package state;
 
+import entities.terrain.Ground;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
@@ -7,7 +8,11 @@ import entities.player.Player;
 import flixel.FlxState;
 
 class PlayState extends FlxState {
-	
+
+    private var PLATFORM_START_X(default, never):Int = 0;
+    private var PLATFORM_START_Y(default, never):Int = 150;
+    private var PLATFORM_LENGTH(default, never):Int = 10;
+    
 	private var player:Player;
 
 	private var entities:FlxGroup;
@@ -31,7 +36,13 @@ class PlayState extends FlxState {
 
 		player = new Player();
 		loaded.add(player);
-		
+        
+        for (i in 0...PLATFORM_LENGTH) {
+            var groundStartX:Int = PLATFORM_START_X + i * Ground.WIDTH;
+            var ground:Ground = new Ground(groundStartX, PLATFORM_START_Y);
+
+            loaded.add(ground);
+        }
 		return loaded;
 	}
 
