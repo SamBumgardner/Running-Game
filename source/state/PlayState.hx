@@ -15,43 +15,56 @@ class PlayState extends FlxState {
     
 	private var player:Player;
 
-	private var entities:FlxGroup;
+    private var groundTiles:FlxGroup;
 
     ////////////////////
     // INITIALIZATION //
     ////////////////////
 	override public function create():Void {
-		entities = loadEntities();
-
-		add(entities);
+        player = loadPlayer();
+        add(player);
+        groundTiles = loadGroundTiles();
+        add(groundTiles);
 	}
 
 	/**
-		Loads all entities used in the state.
+		Loads player entity used in the state.
 		
-		@return FlxGroup containing all entities, unsorted.
+		@return Player object, initialzed and ready for use.
 	**/
-	public function loadEntities():FlxGroup {
-		var loaded:FlxGroup = new FlxGroup();
-
+	public function loadPlayer():Player {
 		player = new Player();
-		loaded.add(player);
         
+		return player;
+    }
+    
+    /**
+        Loads Ground used in the state.
+
+        @return FlxGroup containing all Ground objects, unsorted.
+    **/
+    public function loadGroundTiles():FlxGroup {
+        var loaded:FlxGroup = new FlxGroup();
+
         for (i in 0...PLATFORM_LENGTH) {
             var groundStartX:Int = PLATFORM_START_X + i * Ground.WIDTH;
             var ground:Ground = new Ground(groundStartX, PLATFORM_START_Y);
 
             loaded.add(ground);
         }
-		return loaded;
-	}
+        return loaded;
+    }
 
     ////////////
     // Update //
     ////////////
 	override public function update(elapsed:Float):Void {
-		screenWrap(player);
-		super.update(elapsed);
+        super.update(elapsed);
+        // super.update() triggers updates for all entities in the FlxState.
+        // The next frame is drawn after this function completes, so most state-controlled logic
+        // should be taken care of here, after updating objects but before drawing the frame.
+        screenWrap(player);
+        FlxG.collide(player, groundTiles);
 	}
 
     /**

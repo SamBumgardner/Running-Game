@@ -41,7 +41,7 @@ class Player extends FlxSprite
     override public function update(elapsed:Float) {
         setMoveSpeed();
         jump();
-        // super.update() updates position, draws sprite, etc. so we typcially want to do it last.
+        // super.update() updates position, etc. so we typcially want to do it last.
         super.update(elapsed);
     }
 
