@@ -13,29 +13,29 @@ class PlayState extends FlxState {
     private var PLATFORM_START_Y(default, never):Int = 150;
     private var PLATFORM_LENGTH(default, never):Int = 10;
     
-	private var player:Player;
+    private var player:Player;
 
     private var groundTiles:FlxGroup;
 
     ////////////////////
     // INITIALIZATION //
     ////////////////////
-	override public function create():Void {
+    override public function create():Void {
         player = loadPlayer();
         add(player);
         groundTiles = loadGroundTiles();
         add(groundTiles);
-	}
+    }
 
-	/**
-		Loads player entity used in the state.
-		
-		@return Player object, initialzed and ready for use.
-	**/
-	public function loadPlayer():Player {
-		player = new Player();
+    /**
+        Loads player entity used in the state.
         
-		return player;
+        @return Player object, initialzed and ready for use.
+    **/
+    public function loadPlayer():Player {
+        player = new Player();
+        
+        return player;
     }
     
     /**
@@ -58,14 +58,14 @@ class PlayState extends FlxState {
     ////////////
     // Update //
     ////////////
-	override public function update(elapsed:Float):Void {
+    override public function update(elapsed:Float):Void {
         super.update(elapsed);
         // super.update() triggers updates for all entities in the FlxState.
         // The next frame is drawn after this function completes, so most state-controlled logic
         // should be taken care of here, after updating objects but before drawing the frame.
         screenWrap(player);
         FlxG.collide(player, groundTiles);
-	}
+    }
 
     /**
         Handles screen wrap if the specified entity ever goes off-screen.
