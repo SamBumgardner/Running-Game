@@ -63,8 +63,8 @@ class PlayState extends FlxState {
         // super.update() triggers updates for all entities in the FlxState.
         // The next frame is drawn after this function completes, so most state-controlled logic
         // should be taken care of here, after updating objects but before drawing the frame.
-        screenWrap(player);
         FlxG.collide(player, groundTiles);
+        screenWrap(player);
     }
 
     /**
@@ -77,7 +77,7 @@ class PlayState extends FlxState {
         if (entity.x > FlxG.width) {
             entity.x = -1 * entity.width;
         }
-        if (entity.x + entity.height < 0) {
+        if (entity.x + entity.width < 0) {
             entity.x = FlxG.width;
         }
         // Handle vertical screen wrap.
