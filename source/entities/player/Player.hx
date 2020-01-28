@@ -103,9 +103,16 @@ class Player extends FlxSprite
         Handles logic around jumping, including initiation and stopping one early.
     **/
     private function jump() {
-        if (touching == FlxObject.DOWN && FlxG.keys.justPressed.SPACE) {
+        if (touching == FlxObject.RIGHT && FlxG.keys.justPressed.SPACE) { // wall jump 
+            velocity.y = JUMP_SPEED;
+            facing = FlxObject.LEFT;
+        } else if (touching == FlxObject.LEFT && FlxG.keys.justPressed.SPACE) { // other wall jump
+            velocity.y = JUMP_SPEED;
+            facing = FlxObject.RIGHT;
+        } else if (touching == FlxObject.DOWN && FlxG.keys.justPressed.SPACE) { // normal jump
             velocity.y = JUMP_SPEED;
         }
+
         if (FlxG.keys.justReleased.SPACE && velocity.y < FAST_FALL_SPEED) {
             velocity.y = FAST_FALL_SPEED;
         }
