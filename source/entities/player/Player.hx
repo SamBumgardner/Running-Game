@@ -13,9 +13,10 @@ class Player extends FlxSprite
     private static var WIDTH(default, never):Int = 32;
     private static var HEIGHT(default, never):Int = 64;
 
-    private static var JUMP_SPEED(default, never):Float = -300;
-    private static var GRAVITY(default, never):Float = 250;
-    private static var MAX_SPEED_Y(default, never):Float = 480;
+    private static var JUMP_SPEED(default, never):Float = -400;
+    private static var FAST_FALL_SPEED(default, never):Float = 0;
+    private static var GRAVITY(default, never):Float = 600;
+    private static var MAX_SPEED_Y(default, never):Float = 450;
 
     private static var MAX_SPEED_X(default, never):Float = 200;
     private static var MIN_SPEED_X(default, never):Float = 50;
@@ -99,11 +100,14 @@ class Player extends FlxSprite
     }
 
     /**
-        Checks if player should jump, then jumps if needed.
+        Handles logic around jumping, including initiation and stopping one early.
     **/
     private function jump() {
-        if (FlxG.keys.justPressed.SPACE) {
+        if (touching == FlxObject.DOWN && FlxG.keys.justPressed.SPACE) {
             velocity.y = JUMP_SPEED;
+        }
+        if (FlxG.keys.justReleased.SPACE && velocity.y < FAST_FALL_SPEED) {
+            velocity.y = FAST_FALL_SPEED;
         }
     }
 }
