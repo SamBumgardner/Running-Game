@@ -10,6 +10,8 @@ import flixel.FlxSprite;
 **/
 class Player extends FlxSprite 
 {
+    private static var OFFSET_X(default, never):Int = 0;
+    private static var OFFSET_Y(default, never):Int = 0;
     private static var WIDTH(default, never):Int = 32;
     private static var HEIGHT(default, never):Int = 64;
 
@@ -22,12 +24,18 @@ class Player extends FlxSprite
     private static var MIN_SPEED_X(default, never):Float = 50;
     private static var DEFAULT_SPEED_X(default, never):Float = 100;
 
+    private static var SPRITE_WIDTH(default, never):Int = 32;
+    private static var SPRITE_HEIGHT(default, never):Int = 64;
+    private static var RUN_ANIMATION(default, never):String = "run";
+
     ////////////////////
     // INITIALIZATION //
     ////////////////////
     public function new(startingDirection:Int = FlxObject.RIGHT) {
         super();
-        makeGraphic(WIDTH, HEIGHT);
+        makeGraphic(WIDTH, HEIGHT); // TODO: Remove this when un-commenting below lines.
+        //configureAnimations();
+        //configureHitbox();
         configureSpeed();
 
         facing = startingDirection;
@@ -39,6 +47,30 @@ class Player extends FlxSprite
     private function configureSpeed() {
         acceleration.set(0, GRAVITY);
         maxVelocity.set(MAX_SPEED_X, MAX_SPEED_Y);
+    }
+
+    /**
+        Sets up all animations used by the player.
+    **/
+    private function configureAnimations() {
+        // Load spritesheet for player
+        loadGraphic(AssetPaths.data_goes_here__txt, true, SPRITE_WIDTH, SPRITE_HEIGHT);
+
+        // Specify parameters for each animation.
+        animation.add(RUN_ANIMATION, [0], 1);
+
+        // Make image automatically flip whenever 'facing' variable changes.
+        setFacingFlip(FlxObject.LEFT, true, false);
+        setFacingFlip(FlxObject.RIGHT, false, false);
+    }
+
+    /**
+        Sets up player hitbox size and offset relative to its sprite's origin.
+    **/
+    private function configureHitbox() {
+        offset.set(OFFSET_X, OFFSET_Y);
+        width = WIDTH;
+        height = HEIGHT;
     }
 
     ////////////
