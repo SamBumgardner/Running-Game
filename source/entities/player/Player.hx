@@ -25,8 +25,8 @@ class Player extends FlxSprite
     ////////////////////
     // INITIALIZATION //
     ////////////////////
-    public function new(startingDirection:Int = FlxObject.RIGHT) {
-        super();
+    public function new(X:Float = 0, Y:Float = 0, startingDirection:Int = FlxObject.RIGHT) {
+        super(X, Y);
         makeGraphic(WIDTH, HEIGHT);
         configureSpeed();
 
